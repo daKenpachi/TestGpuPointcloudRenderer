@@ -1,0 +1,4 @@
+[submodule "Plugins/GPUPointcloudRenderer"]
+	path = Plugins/GPUPointcloudRenderer
+	url = https://github.com/daKenpachi/UE4_GPUPointCloudRenderer.git
+	branch = master_4.19
