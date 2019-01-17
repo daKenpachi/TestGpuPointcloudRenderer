@@ -152,12 +152,13 @@ bool UPointAndPixelUtility::DeprojectSceneToWorld(USceneCaptureComponent2D * Ren
 			FVector PointLocation, PointDirection;
 			FSceneView::DeprojectScreenToWorld(FVector2D(x, y), ScreenSize, ProjectionMatrix, PointLocation, PointDirection);
 			if (cameraRelative) {
-				// get point coordinates
+				// get point coordinates in usual coordinate system (right-handed, z is forward vector)
 				float z = FormatedImageData[i].A;
 				float x3d = (PointLocation.X - MiddlePoint.X) * (z / PointLocation.Z);
-				float y3d = (PointLocation.Y - MiddlePoint.Y) * (z / PointLocation.Z);
+				float y3d = -(PointLocation.Y - MiddlePoint.Y) * (z / PointLocation.Z);
 				if (z > 1.0) {
-					Points.Add(FVector(x3d, y3d, z));
+					// convert to unreal left-handed system with x is forward vector
+					Points.Add(FVector(z, x3d, -y3d));
 				}
 			}
 			else {
